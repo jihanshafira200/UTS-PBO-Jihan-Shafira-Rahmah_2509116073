@@ -1,0 +1,451 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package view;
+
+import java.util.Scanner;
+import data.DataAwal;
+import model.Costum;
+import model.pelanggan;
+import model.Peminjaman;
+
+/**
+ *
+ * @author LENOVO
+ */
+public class Main {
+
+    static Scanner input = new Scanner(System.in);
+    public static void main(String[] args) {
+
+        DataAwal.isiDataAwal();
+        int pilihan;
+
+        do {
+
+            System.out.println("\n===== SISTEM MANAJEMEN PEMINJAMAN KOSTUM =====");
+            System.out.println("1. Kelola Data Kostum");
+            System.out.println("2. Kelola Data Pelanggan");
+            System.out.println("3. Kelola Data Peminjaman");
+            System.out.println("4. Keluar");
+            System.out.print("Pilih menu : ");
+
+            pilihan = input.nextInt();
+
+            switch (pilihan) {
+
+                case 1:
+                    menuCostum();
+                    break;
+
+                case 2:
+                    menuPelanggan();
+                    break;
+
+                case 3:
+                    menuPeminjaman();
+                    break;
+
+                case 4:
+                    System.out.println("Program selesai");
+                    break;
+
+                default:
+                    System.out.println("Pilihan tidak tersedia");
+            }
+
+        } while (pilihan != 4);
+
+    }
+
+    public static void menuCostum() {
+
+        int pilihan;
+        do {
+
+            System.out.println("\n===== MENU COSTUM =====");
+            System.out.println("1. Tambah Costum");
+            System.out.println("2. Tampilkan Costum");
+            System.out.println("3. Update Costum");
+            System.out.println("4. Hapus Costum");
+            System.out.println("5. Kembali");
+            System.out.print("Pilih menu : ");
+
+            pilihan = input.nextInt();
+
+            switch (pilihan) {
+
+                case 1:
+                    tambahCostum();
+                    break;
+
+                case 2:
+                    tampilCostum();
+                    break;
+
+                case 3:
+                    updateCostum();
+                    break;
+
+                case 4:
+                    hapusCostum();
+                    break;
+            }
+        } while (pilihan != 5);
+    }
+
+    public static void tambahCostum() {
+
+        input.nextLine();
+        System.out.print("ID Kostum : ");
+        String id = input.nextLine();
+
+        for(Costum c : DataAwal.daftarCostum){
+
+        if(c.getIdKostum().equals(id)){
+           System.out.println("ID Kostum sudah digunakan!");
+           return;
+    }
+}
+        System.out.print("Nama Kostum : ");
+        String nama = input.nextLine();
+
+        System.out.println("Kategori Kostum");
+        System.out.println("1. Superhero");
+        System.out.println("2. Anime");
+        System.out.println("3. Tradisional");
+        System.out.println("4. Profesi");
+
+        System.out.print("Pilih kategori : ");
+        int pilihKategori = input.nextInt();
+
+        String kategori;
+
+        switch(pilihKategori){
+
+            case 1:
+                kategori = "Superhero";
+                break;
+
+            case 2:
+                kategori = "Anime";
+                break;
+
+            case 3:
+                kategori = "Tradisional";
+                break;
+
+            case 4:
+                kategori = "Profesi";
+                break;
+
+            default:
+                kategori = "Lainnya";
+        }
+
+        System.out.print("Ukuran kostum : ");
+        int ukuran = input.nextInt();
+
+        if(ukuran <= 0){
+
+        System.out.println("Ukuran tidak valid");
+        return;
+        }
+    }
+
+    public static void tampilCostum(){
+
+        System.out.println("\n===== DATA COSTUM =====");
+        for(Costum c : DataAwal.daftarCostum){
+            c.tampilData();
+            System.out.println();
+        }
+    }
+
+    public static void updateCostum(){
+
+        input.nextLine();
+        System.out.print("Masukkan ID Kostum : ");
+        String id = input.nextLine();
+        for(Costum c : DataAwal.daftarCostum){
+            
+            if(c.getIdKostum().equals(id)){
+                System.out.print("Nama baru : ");
+                c.setNama(input.nextLine());
+
+                System.out.print("Harga baru : ");
+                c.setHargaSewa(input.nextDouble());
+
+                System.out.println("Data berhasil diperbarui");
+                return;
+            }
+        }
+        System.out.println("Data tidak ditemukan");
+    }
+
+    public static void hapusCostum(){
+
+        input.nextLine();
+
+        System.out.print("Masukkan ID Kostum : ");
+        String id = input.nextLine();
+
+        for(Costum c : DataAwal.daftarCostum){
+            if(c.getIdKostum().equals(id)){
+                DataAwal.daftarCostum.remove(c);
+                System.out.println("Data berhasil dihapus");
+                return;
+            }
+        }
+
+        System.out.println("Data tidak ditemukan");
+    }
+
+    public static void menuPelanggan(){
+
+        int pilihan;
+        do{
+
+            System.out.println("1. Tambah Pelanggan");
+            System.out.println("2. Tampilkan Pelanggan");
+            System.out.println("3. Update Pelanggan");
+            System.out.println("4. Hapus Pelanggan");
+            System.out.println("5. Kembali");
+            System.out.print("Pilih : ");
+
+            pilihan = input.nextInt();
+
+            switch(pilihan){
+            case 1:
+               tambahPelanggan();
+               break;
+
+            case 2:
+               tampilPelanggan();
+                break;
+
+            case 3:
+               updatePelanggan();
+               break;
+               
+            case 4:
+               hapusPelanggan();
+               break;
+            }
+        }while(pilihan != 5);
+    }
+
+    public static void tambahPelanggan(){
+
+        input.nextLine();
+        System.out.print("ID Pelanggan : ");
+        String id = input.nextLine();
+
+
+        System.out.print("Nama : ");
+        String nama = input.nextLine();
+        System.out.print("Nomor Telepon : ");
+        String nomor = input.nextLine();
+        System.out.print("Alamat : ");
+        String alamat = input.nextLine();
+
+        pelanggan p = new pelanggan(
+                id,
+                nama,
+                nomor,
+                alamat
+        );
+        
+        DataAwal.daftarPelanggan.add(p);
+        System.out.println("Pelanggan berhasil ditambahkan");
+
+    }
+
+    public static void tampilPelanggan(){
+
+        System.out.println("\n===== DATA PELANGGAN =====");
+
+        for(pelanggan p : DataAwal.daftarPelanggan){
+            p.tampilData();
+            System.out.println();
+        }
+    }
+    
+    public static void updatePelanggan(){
+        
+        input.nextLine();
+        
+        System.out.print("Masukkan ID Pelanggan : ");
+        String id = input.nextLine();
+        
+        for(pelanggan p : DataAwal.daftarPelanggan){
+            if(p.getIdPelanggan().equals(id)){
+                
+            System.out.print("Nama baru : ");
+            p.setNama(input.nextLine());
+
+            System.out.print("Nomor Telepon baru : ");
+            p.setNomorTelepon(input.nextLine());
+
+            System.out.print("Alamat baru : ");
+            p.setAlamat(input.nextLine());
+
+            System.out.println("Data pelanggan berhasil diperbarui");
+            return;
+        }
+    }
+    System.out.println("Data pelanggan tidak ditemukan");
+}
+    
+    public static void hapusPelanggan(){
+
+    input.nextLine();
+    System.out.print("Masukkan ID Pelanggan : ");
+    String id = input.nextLine();
+
+    for(pelanggan p : DataAwal.daftarPelanggan){
+        if(p.getIdPelanggan().equals(id)){
+            DataAwal.daftarPelanggan.remove(p);
+            System.out.println("Data pelanggan berhasil dihapus");
+            return;
+        }
+    }
+    System.out.println("Data pelanggan tidak ditemukan");
+}
+
+    public static void menuPeminjaman(){
+
+        int pilihan;
+        do{
+
+            System.out.println("\n===== MENU PEMINJAMAN =====");
+            System.out.println("1. Tambah Peminjaman");
+            System.out.println("2. Tampilkan Peminjaman");
+            System.out.println("3. Update Status Peminjaman");
+            System.out.println("4. Hapus Peminjaman");
+            System.out.println("5. Kembali");
+            System.out.print("Pilih : ");
+
+            pilihan = input.nextInt();
+
+            switch(pilihan){
+
+                case 1:
+                    tambahPeminjaman();
+                    break;
+
+                case 2:
+                    tampilPeminjaman();
+                    break;
+
+                case 3:
+                    updateStatus();
+                    break;
+                    
+                case 4:
+                    hapusPeminjaman();
+                    break;
+            }
+        }while(pilihan != 5);
+    }
+
+    public static void tambahPeminjaman(){
+
+        input.nextLine();
+        System.out.print("ID Peminjaman : ");
+        
+        String id = input.nextLine();
+        System.out.print("ID Pelanggan : ");
+        
+        boolean pelangganAda = false;
+
+
+    for(pelanggan p : DataAwal.daftarPelanggan){
+
+        if(p.getIdPelanggan().equals(idPelanggan)){
+            pelangganAda = true;
+            break;
+        }
+    }
+        if(!pelangganAda){
+        System.out.println("ID Pelanggan tidak ditemukan");
+        return;
+    }
+        
+        String idPelanggan = input.nextLine();
+        System.out.print("ID Kostum : ");
+        
+        String idKostum = input.nextLine();
+
+        System.out.print("Tanggal Pinjam (DD-MM-YYYY) : ");
+        String tanggalPinjam = input.nextLine();
+
+        System.out.print("Tanggal Pengembalian (DD-MM-YYYY) : ");
+        String tanggalKembali = input.nextLine();
+
+        Peminjaman pm = new Peminjaman(
+                id,
+                idPelanggan,
+                idKostum,
+                tanggalPinjam,
+                tanggalKembali,
+                "Dipinjam"
+        );
+
+        DataAwal.daftarPeminjaman.add(pm);
+
+        System.out.println("Peminjaman berhasil ditambahkan");
+    }
+
+    public static void tampilPeminjaman(){
+
+        System.out.println("\n===== DATA PEMINJAMAN =====");
+        for(Peminjaman pm : DataAwal.daftarPeminjaman){
+
+            pm.tampilData();
+            System.out.println();
+        }
+    }
+
+    public static void updateStatus(){
+
+        input.nextLine();
+        System.out.print("ID Peminjaman : ");
+        String id = input.nextLine();
+
+        for(Peminjaman pm : DataAwal.daftarPeminjaman){
+
+            if(pm.getIdPeminjaman().equals(id)){
+                System.out.print("Status baru : ");
+                pm.setStatusPeminjaman(input.nextLine());
+
+                System.out.println("Status berhasil diperbarui");
+                return;
+            }
+        }
+
+        System.out.println("Data tidak ditemukan");
+    }
+    
+    public static void hapusPeminjaman(){
+
+    input.nextLine();
+    System.out.print("Masukkan ID Peminjaman : ");
+    String id = input.nextLine();
+
+    for(Peminjaman pm : DataAwal.daftarPeminjaman){
+
+        if(pm.getIdPeminjaman().equals(id)){
+
+            DataAwal.daftarPeminjaman.remove(pm);
+            System.out.println("Data peminjaman berhasil dihapus");
+            return;
+        }
+    }
+    System.out.println("Data peminjaman tidak ditemukan");
+  }
+}
+
+
+    
